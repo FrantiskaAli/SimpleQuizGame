@@ -10,6 +10,34 @@ let divChoices = document.getElementById('choices');
 let finalScore = document.getElementById('final-score');
 let stopTimer = false //will need this to stop the timer if function the end is calles
 let score = 0; //score tracker
+let order = 0; //questions order
+
+
+
+//creating questions layout
+let answerOne = document.createElement('li');
+let answerTwo = document.createElement('li');
+let answerThree = document.createElement('li');
+let answerFour = document.createElement('li');
+    //sets same class for all the answers for easier manipulation
+    answerOne.setAttribute('class', 'answers');
+    answerTwo.setAttribute('class', 'answers');
+    answerThree.setAttribute('class', 'answers');
+    answerFour.setAttribute('class', 'answers');
+//this will create actual list
+divChoices.append(answerOne, answerTwo, answerThree, answerFour);
+
+
+
+//function after clicking start
+start.addEventListener('click', function(){
+    timer(questionsObject.length);
+    startScreen.setAttribute('class','hide') //hides the start div
+    questionDiv.setAttribute('class', 'visible') //shows the questiong
+    displayQuestion(order)
+
+})
+
 
 //function to start timer on click event
 function timer (amountofquestions) {
@@ -29,44 +57,83 @@ let timerInterval = setInterval(function(){
 score = secondsLeft;//will save seconds left into variable which is available globaly
  },1000)};
 
-timer(3)
 
-//add click event for when start button is pressed and add function that will 
-//display question and start the countdown
-function displayQuestion (quest) {
-    startScreen.setAttribute('class','hide') //hides the start div
-    questionDiv.setAttribute('class', 'visible') //shows the questiong
-   //adds heading in form of the question
-    questionTitle.textContent = questionsObject[quest].question;
-    //should set the answers into variables
-    let answerOne = document.createElement('li');
-    let answerTwo = document.createElement('li');
-    let answerThree = document.createElement('li');
-    let answerFour = document.createElement('li');
-    //this will create list
-    divChoices.append(answerOne, answerTwo, answerThree, answerFour);
-    //this will add answer button into each listed item
-    //button 1
-    let answOneBtn = document.createElement('button');
-    answOneBtn.innerText = questionsObject[quest].answer[0]; 
-    answerOne.appendChild(answOneBtn);
-    //button 2
-    let answTwoBtn = document.createElement('button');
-    answTwoBtn.innerText = questionsObject[quest].answer[1];
-    answerTwo.appendChild(answTwoBtn);
-    //button 3
-    let answThreeBtn = document.createElement('button');
-    answThreeBtn.innerText = questionsObject[quest].answer[2];
-    answerThree.appendChild(answThreeBtn);
-    // button 4
-    let answFourBtn = document.createElement('button');
-    answFourBtn.innerText = questionsObject[quest].answer[3];
-    answerFour.appendChild(answFourBtn);
-}
+
+
+ function displayQuestion(order){
+  
+    questionTitle.textContent = questionsObject[order].question;
+    //answer1
+    
+   answerOne.innerText = questionsObject[order].answer[0]; 
+   answerOne.addEventListener('click', function(event){
+    let clicked = event.target
+    let text = clicked.textContent;
+   console.log(event.target)
+    if(!questionsObject[order].question){
+        console.log('correct')
+     theEnd();
+     return
+    }
+    else if (text === questionsObject[order].correctAnswer){
+       console.log('correct')
+       displayQuestion(order);
+    } else {
+        console.log('incorrect')
+        score -= 10;
+      displayQuestion(order) }
+
+
+})
+    //answer 2
+    
+    answerTwo.innerText = questionsObject[order].answer[1];
+    
+    //answer 3
+    
+    answerThree.innerText = questionsObject[order].answer[2];
+   
+    // answer 4
+    
+    answerFour.innerText = questionsObject[order].answer[3];}
+
+
+
+
+
+
+
+
+
+    
+
+
+
+//for (i of clickable) {
+  //  (function(i) {
+    //  i.addEventListener('click', function() {
+        
+      //  if (quest + 1 === undefined){ //this should check that there is next question in object, otherwise star the end.
+        //    theEnd();
+            //under is to check if the answer is correct
+          // } else if(questionsObject[quest].answer[0]  === questionsObject[quest].correctAnswer){
+            //displayQuestion (quest +1)} else {
+              //  score -= 10;
+                //displayQuestion (quest +1)
+            //}
+     // });
+   // })(i);
+  //}
+    
+//};
 
 
 
 //start.addEventListener('click', )
+
+//aadevent listener for changing questions 
+
+
 
 
 //if answer is correct => next question,
@@ -88,3 +155,6 @@ function theEnd(){
 //create input window that player can type in
 //last displayed window to safe data on local storage
 // together with what left on timer
+
+
+

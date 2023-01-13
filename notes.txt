@@ -1,3 +1,21 @@
 function list :
         1. function timer -- done
         2.
+
+
+
+  answOneBtn.addEventListener('click', function(){
+        answerOne.remove();
+        answerTwo.remove();
+        answerThree.remove();
+        answerFour.remove();
+       
+    if (quest + 1 === undefined){ //this should check that there is next question in object, otherwise star the end.
+        theEnd();
+        //under is to check if the answer is correct
+       } else if(questionsObject[quest].answer[0]  === questionsObject[quest].correctAnswer){
+        displayQuestion (quest +1)} else {
+            score -= 10;
+            displayQuestion (quest +1)
+        }
+    })
