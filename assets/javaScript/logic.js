@@ -3,25 +3,30 @@ const timerDisplay = document.getElementById('time');
 const start = document.getElementById('start');
 const startScreen = document.getElementById('start-screen')
 const questionDiv = document.getElementById('questions');
+const endScreen = document.getElementById('end-screen');
+
 let questionTitle = document.getElementById('question-title');
 let divChoices = document.getElementById('choices');
-
-
-
-
+let finalScore = document.getElementById('final-score');
+let stopTimer = false //will need this to stop the timer if function the end is calles
+let score = 0; //score tracker
 
 //function to start timer on click event
 function timer (amountofquestions) {
 let secondsLeft = amountofquestions * 10;
-setInterval(function(){
+let timerInterval = setInterval(function(){
             secondsLeft--;
             timerDisplay.textContent = secondsLeft;
         if(secondsLeft === 0) {
         alert('You have run out of time! Try again')
        //if times reaches 0 alert that game is lost
        window.location.reload();//this line will refresh page if game is lost
-        clearInterval(timerInterval);}
-
+        clearInterval(timerInterval);
+        } else if (stopTimer === true) {
+            clearInterval(timerInterval);
+            
+        } 
+score = secondsLeft;//will save seconds left into variable which is available globaly
  },1000)};
 
 timer(3)
@@ -70,7 +75,14 @@ function displayQuestion (quest) {
 
 
 //on last question after click event stop the timer
+function theEnd(){
+    stopTimer = true;
+    startScreen.setAttribute('class','hide');
+    questionDiv.setAttribute('class', 'hide');
+    endScreen.setAttribute('class','visible');
+    finalScore.innerText = score;
 
+}
 
 
 //create input window that player can type in
