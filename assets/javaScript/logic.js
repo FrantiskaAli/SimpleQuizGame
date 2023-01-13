@@ -28,26 +28,35 @@ timer(3)
 
 //add click event for when start button is pressed and add function that will 
 //display question and start the countdown
-function displayQuestion () {
+function displayQuestion (quest) {
     startScreen.setAttribute('class','hide') //hides the start div
     questionDiv.setAttribute('class', 'visible') //shows the questiong
    //adds heading in form of the question
-    questionTitle.textContent = questionsObject[0].question;
+    questionTitle.textContent = questionsObject[quest].question;
     //should set the answers into variables
     let answerOne = document.createElement('li');
-    answerOne.innerText = questionsObject[0].answer[0]; 
     let answerTwo = document.createElement('li');
-    answerTwo.innerText = questionsObject[0].answer[1];
     let answerThree = document.createElement('li');
-    answerThree.innerText = questionsObject[0].answer[2];
     let answerFour = document.createElement('li');
-    answerFour.innerText = questionsObject[0].answer[3];
-    //this should display everything
-    divChoices.append(answerOne, answerTwo, answerThree, answerFour)
-
-
-
-
+    //this will create list
+    divChoices.append(answerOne, answerTwo, answerThree, answerFour);
+    //this will add answer button into each listed item
+    //button 1
+    let answOneBtn = document.createElement('button');
+    answOneBtn.innerText = questionsObject[quest].answer[0]; 
+    answerOne.appendChild(answOneBtn);
+    //button 2
+    let answTwoBtn = document.createElement('button');
+    answTwoBtn.innerText = questionsObject[quest].answer[1];
+    answerTwo.appendChild(answTwoBtn);
+    //button 3
+    let answThreeBtn = document.createElement('button');
+    answThreeBtn.innerText = questionsObject[quest].answer[2];
+    answerThree.appendChild(answThreeBtn);
+    // button 4
+    let answFourBtn = document.createElement('button');
+    answFourBtn.innerText = questionsObject[quest].answer[3];
+    answerFour.appendChild(answFourBtn);
 }
 
 
