@@ -1,14 +1,13 @@
 //define all variables that will be used in global scope.
+//I tried to name them so they are pretty self-explanatory
 const timerDisplay = document.getElementById('time');
 const start = document.getElementById('start');
 const startScreen = document.getElementById('start-screen')
 const questionDiv = document.getElementById('questions');
 const endScreen = document.getElementById('end-screen');
 const wrongSound = document.getElementById('wrong-sound');
-const goodSound = document.getElementById('correct-sound')
-
-
-
+const goodSound = document.getElementById('correct-sound');
+const saveScore = document.getElementById('submit');
 let questionTitle = document.getElementById('question-title');
 let divChoices = document.getElementById('choices');
 let finalScore = document.getElementById('final-score');
@@ -59,7 +58,7 @@ let timerInterval = setInterval(function(){
        window.location.reload();//this line will refresh page if game is lost
         clearInterval(timerInterval);
         }
-         else if (stopTimer === true) {
+         else if (stopTimer === true) {//thisvariable was made earlier so I can easily stop timer in any other part of code
             clearInterval(timerInterval);
             
         } 
@@ -69,33 +68,34 @@ score;//will save seconds left into variable which is available globaly
 
 
 
- function displayQuestion(order){
+ function displayQuestion(order){//this function displays questions
   if(order > questionsObject.length -1){
-    theEnd()
+    theEnd()//if you have answered all the questions, end screen will show
   }else{
   
-  questionTitle.textContent = questionsObject[order].question;
+  questionTitle.textContent = questionsObject[order].question; //adding text in question heading
     //answer1
     let answerButtonA = document.createElement('button')
    answerButtonA.innerText = questionsObject[order].answer.a; 
-   answerOne.appendChild(answerButtonA);
+   answerOne.appendChild(answerButtonA);//this block of code created  button with answer written on it
 
-   answerButtonA.addEventListener('click', function(event){
-    let clicked = event.target
-    let text = clicked.innerText
+   answerButtonA.addEventListener('click', function(event){ //event listener for when answer chosed
+    let clicked = event.target  //i need to declare these two variables so i can
+    let text = clicked.innerText //easily compare if answer is correct
   if(text === questionsObject[order].correctAnswer){
-    console.log('correct');
-    order += 1;
-    deleteOld()
-    displayQuestion(order)
-    goodSound.play()
+    //correct answer
+    //console.log('correct'); i did lots of console.log while testing
+    order += 1; //increases questions order index
+    deleteOld() // removes old buttons
+    displayQuestion(order) //displays new question
+    goodSound.play() // plays sound
   } else {
-    order +=1;
-     score -=10; 
-    console.log('notgood')
-    deleteOld()
-    displayQuestion(order)
-    wrongSound.play()
+    order +=1; //increases questions order
+     score -=10;  //decreases timer by 10 seconds
+    //console.log('notgood')
+    deleteOld() //removes old question
+    displayQuestion(order) // shows next question
+    wrongSound.play() //plays sound
     }
  
 })
@@ -105,6 +105,7 @@ score;//will save seconds left into variable which is available globaly
     answerButtonB.innerText = questionsObject[order].answer.b;
     answerTwo.appendChild(answerButtonB)
 //after click
+//i will attempt to loop the event listener as its the same for each, inshallah
 answerButtonB.addEventListener('click', function(event){
   let clicked = event.target
   let text = clicked.innerText
@@ -181,13 +182,9 @@ if(text === questionsObject[order].correctAnswer){
   }
  }
 
-
-
-
-
-
     
  function deleteOld() {
+  //this function is pretty self explanatory, clears the buttons
   
   allAnswersList.children[0].innerHTML = "";
   allAnswersList.children[1].innerHTML = "";
@@ -200,32 +197,36 @@ if(text === questionsObject[order].correctAnswer){
 
 
 
-//start.addEventListener('click', )
-
-//aadevent listener for changing questions 
-
-
-
-
-//if answer is correct => next question,
-//else if answer is incorrect => timer - 10seconds and nex qustion
-
-
-
-//on last question after click event stop the timer
 function theEnd(){
-    stopTimer = true;
-    startScreen.setAttribute('class','hide');
-    questionDiv.setAttribute('class', 'hide');
-    endScreen.setAttribute('class','visible');
-    finalScore.innerText = score - 1 ;
+  //this function displays the final screen
+    stopTimer = true; //stops the timer
+    questionDiv.setAttribute('class', 'hide');//hides questions
+    endScreen.setAttribute('class','visible');//shows the end screen
+    finalScore.innerText = score - 1 ;//timer was is still countin one sec after last question so i adjust it so timer and score is the same ,if someone wanna check
 
 }
+let leadersArray = [];//creates array into whitch scores and initials will be pushed
+saveScore.addEventListener('click', function(event){
+  event.preventDefault;//stops submit from doing whatever it woulc in html alone
+
+//this whole block basically just accesses local storage and reassamble array of objects
+//then it will push new object in the array
+//then it stringifies the arrays object,so it can be stored on local storage
+
+  let initials = document.getElementById('initials').value;
+let leaderBoardObject = {
+  name: initials,
+  points: score, 
+}
+
+let oldScores = localStorage.getItem('leaders');
+leadersArray.push(JSON.parse(JSON.parse(oldScores)));
+leadersArray.push(leaderBoardObject);
+localStorage.setItem('leaders', JSON.stringify(JSON.stringify(leadersArray)));
+
+})
 
 
-//create input window that player can type in
-//last displayed window to safe data on local storage
-// together with what left on timer
 
 
 
