@@ -15,10 +15,6 @@ let stopTimer = false //will need this to stop the timer if function the end is 
 let score = 6 * 10;; //score tracker
 let order = 0; //questions order
 let mistake = false
-
-
-
-
 //creating questions layout
 let  allAnswersList = document.createElement('ol');
 divChoices.appendChild(allAnswersList)
@@ -34,8 +30,6 @@ let answerFour = document.createElement('li');
 //this will create actual list
 allAnswersList.append(answerOne, answerTwo, answerThree, answerFour);
 
-
-
 //function after clicking start
 start.addEventListener('click', function(){
     timer();
@@ -44,8 +38,6 @@ start.addEventListener('click', function(){
     displayQuestion(order)
 
 })
-
-
 //function to start timer on click event
 function timer () {
 
@@ -65,9 +57,6 @@ let timerInterval = setInterval(function(){
 score;//will save seconds left into variable which is available globaly
  },1000)};
 
-
-
-
  function displayQuestion(order){//this function displays questions
   if(order > questionsObject.length -1){
     theEnd()//if you have answered all the questions, end screen will show
@@ -79,110 +68,48 @@ score;//will save seconds left into variable which is available globaly
    answerButtonA.innerText = questionsObject[order].answer.a; 
    answerOne.appendChild(answerButtonA);//this block of code created  button with answer written on it
 
-   answerButtonA.addEventListener('click', function(event){ //event listener for when answer chosed
-    let clicked = event.target  //i need to declare these two variables so i can
-    let text = clicked.innerText //easily compare if answer is correct
-  if(text === questionsObject[order].correctAnswer){
-    //correct answer
-    //console.log('correct'); i did lots of console.log while testing
-    order += 1; //increases questions order index
-    deleteOld() // removes old buttons
-    displayQuestion(order) //displays new question
-    goodSound.play() // plays sound
-  } else {
-    order +=1; //increases questions order
-     score -=10;  //decreases timer by 10 seconds
-    //console.log('notgood')
-    deleteOld() //removes old question
-    displayQuestion(order) // shows next question
-    wrongSound.play() //plays sound
-    }
- 
-})
-
     //answer 2
     let answerButtonB = document.createElement('button')
     answerButtonB.innerText = questionsObject[order].answer.b;
     answerTwo.appendChild(answerButtonB)
-//after click
-//i will attempt to loop the event listener as its the same for each, inshallah
-answerButtonB.addEventListener('click', function(event){
-  let clicked = event.target
-  let text = clicked.innerText
-if(text === questionsObject[order].correctAnswer){
-  console.log('correct');
-  order += 1;
-  deleteOld()
-  displayQuestion(order)
-  goodSound.play()
-} else {
-  order +=1;
-   score -=10; 
-  console.log('notgood')
-  deleteOld()
-  displayQuestion(order)
-  wrongSound.play()
-  }
-
-})
 
     //answer 3
     let answerButtonC = document.createElement('button');
     answerButtonC.innerText = questionsObject[order].answer.c;
     answerThree.appendChild(answerButtonC)
-//after cick
-answerButtonC.addEventListener('click', function(event){
-  let clicked = event.target
-  let text = clicked.innerText
-if(text === questionsObject[order].correctAnswer){
-  console.log('correct');
-  order += 1;
-  deleteOld()
-  displayQuestion(order)
-  goodSound.play()
-} else {
-  order +=1;
-  score -=10;
-  console.log('notgood')
-  deleteOld()
-  displayQuestion(order)
-  wrongSound.play()
-  }
 
-})
     // answer 4
     let answerButtonD = document.createElement('button');
     answerButtonD.innerText = questionsObject[order].answer.d;
-    answerFour.appendChild(answerButtonD)
-//after click
-answerButtonD.addEventListener('click', function(event){
-  let clicked = event.target
-  let text = clicked.innerText
-if(text === questionsObject[order].correctAnswer){
-  console.log('correct');
-  order += 1;
-  deleteOld()
-  displayQuestion(order)
-  goodSound.play()
-} else {
-  order +=1;
-  score -=10;
-  console.log('notgood')
-  deleteOld()
-  displayQuestion(order)
-  wrongSound.play()
-  }
-
-})
-//after click logic
-   
-
-
-
+    answerFour.appendChild(answerButtonD) 
   }
  }
 
-    
+//after click logic - Ifound this code on stack overflow, I dont know about nodeNames yet
+divChoices.addEventListener('click', function (event) {
+  const isButton = event.target;
+  if (!isButton) {
+    return;
+  } else{
+    let clicked = event.target
+    let text = clicked.innerText
+  if(text === questionsObject[order].correctAnswer){
+    //console.log('correct');
+    order += 1;
+    deleteOld()
+    displayQuestion(order)
+    goodSound.play()
+  } else {
+    score -=10;
+    order +=1;
+    //console.log('notgood')
+    deleteOld()
+    displayQuestion(order)
+    wrongSound.play()
+    }
+  }
+})
+   
  function deleteOld() {
   //this function is pretty self explanatory, clears the buttons
   
@@ -192,18 +119,12 @@ if(text === questionsObject[order].correctAnswer){
   allAnswersList.children[3].innerHTML = "";
 }
 
-
-
-
-
-
 function theEnd(){
   //this function displays the final screen
     stopTimer = true; //stops the timer
     questionDiv.setAttribute('class', 'hide');//hides questions
     endScreen.setAttribute('class','visible');//shows the end screen
     finalScore.innerText = score - 1 ;//timer was is still countin one sec after last question so i adjust it so timer and score is the same ,if someone wanna check
-
 }
 let leadersArray = JSON.parse(localStorage.getItem('leaders') || "[]");
 //creates array into whitch scores and initials will be pushed
@@ -214,23 +135,20 @@ saveScore.addEventListener('click', function(event){
 //then it will push new object in the array
 //then it stringifies the arrays object,so it can be stored on local storage
 
-  let initials = document.getElementById('initials').value;
+  let initials = document.getElementById('initials').value.trim();
+  if(initials.length > 3){
+    alert('Please only use initials, max 3 characters')
+    initials = ''
+  } else {
 let leaderBoardObject = {
   name: initials,
   points: score, 
-}
-
+} 
 //let oldScores = localStorage.getItem('leaders');
 //leadersArray.push(JSON.parse(JSON.parse(oldScores)));
 leadersArray.push({name: initials, points: score});
 localStorage.setItem('leaders', JSON.stringify(leadersArray));
 
 //this should send us to highscores
-location.href = "highscores.html";
-
+location.href = "highscores.html";}
 })
-
-
-
-
-
