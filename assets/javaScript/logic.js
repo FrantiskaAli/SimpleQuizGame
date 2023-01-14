@@ -1,5 +1,5 @@
 //define all variables that will be used in global scope.
-//I tried to name them so they are pretty self-explanatory
+//I tried to name them so they are sefl explanatory
 const timerDisplay = document.getElementById('time');
 const start = document.getElementById('start');
 const startScreen = document.getElementById('start-screen')
@@ -205,7 +205,8 @@ function theEnd(){
     finalScore.innerText = score - 1 ;//timer was is still countin one sec after last question so i adjust it so timer and score is the same ,if someone wanna check
 
 }
-let leadersArray = [];//creates array into whitch scores and initials will be pushed
+let leadersArray = JSON.parse(localStorage.getItem('leaders') || "[]");
+//creates array into whitch scores and initials will be pushed
 saveScore.addEventListener('click', function(event){
   event.preventDefault;//stops submit from doing whatever it woulc in html alone
 
@@ -219,10 +220,13 @@ let leaderBoardObject = {
   points: score, 
 }
 
-let oldScores = localStorage.getItem('leaders');
-leadersArray.push(JSON.parse(JSON.parse(oldScores)));
-leadersArray.push(leaderBoardObject);
-localStorage.setItem('leaders', JSON.stringify(JSON.stringify(leadersArray)));
+//let oldScores = localStorage.getItem('leaders');
+//leadersArray.push(JSON.parse(JSON.parse(oldScores)));
+leadersArray.push({name: initials, points: score});
+localStorage.setItem('leaders', JSON.stringify(leadersArray));
+
+//this should send us to highscores
+location.href = "highscores.html";
 
 })
 
