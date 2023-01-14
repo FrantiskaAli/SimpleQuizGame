@@ -9,12 +9,14 @@ let questionTitle = document.getElementById('question-title');
 let divChoices = document.getElementById('choices');
 let finalScore = document.getElementById('final-score');
 let stopTimer = false //will need this to stop the timer if function the end is calles
-let score = 0; //score tracker
+let score = 6 * 10;; //score tracker
 let order = 0; //questions order
-
+let mistake = false
 
 
 //creating questions layout
+let  allAnswersList = document.createElement('ol');
+divChoices.appendChild(allAnswersList)
 let answerOne = document.createElement('li');
 let answerTwo = document.createElement('li');
 let answerThree = document.createElement('li');
@@ -25,13 +27,13 @@ let answerFour = document.createElement('li');
     answerThree.setAttribute('class', 'answers');
     answerFour.setAttribute('class', 'answers');
 //this will create actual list
-divChoices.append(answerOne, answerTwo, answerThree, answerFour);
+allAnswersList.append(answerOne, answerTwo, answerThree, answerFour);
 
 
 
 //function after clicking start
 start.addEventListener('click', function(){
-    timer(questionsObject.length);
+    timer();
     startScreen.setAttribute('class','hide') //hides the start div
     questionDiv.setAttribute('class', 'visible') //shows the questiong
     displayQuestion(order)
@@ -40,92 +42,147 @@ start.addEventListener('click', function(){
 
 
 //function to start timer on click event
-function timer (amountofquestions) {
-let secondsLeft = amountofquestions * 10;
+function timer () {
+
 let timerInterval = setInterval(function(){
-            secondsLeft--;
-            timerDisplay.textContent = secondsLeft;
-        if(secondsLeft === 0) {
+            score--;
+            timerDisplay.textContent = score;
+        if(score < 0) {
         alert('You have run out of time! Try again')
        //if times reaches 0 alert that game is lost
        window.location.reload();//this line will refresh page if game is lost
         clearInterval(timerInterval);
-        } else if (stopTimer === true) {
+        }
+         else if (stopTimer === true) {
             clearInterval(timerInterval);
             
         } 
-score = secondsLeft;//will save seconds left into variable which is available globaly
+score;//will save seconds left into variable which is available globaly
  },1000)};
 
 
 
 
  function displayQuestion(order){
+  if(order > questionsObject.length -1){
+    theEnd()
+  }else{
   
-    questionTitle.textContent = questionsObject[order].question;
+  questionTitle.textContent = questionsObject[order].question;
     //answer1
-    
-   answerOne.innerText = questionsObject[order].answer[0]; 
-   answerOne.addEventListener('click', function(event){
-    let clicked = event.target
-    let text = clicked.textContent;
-   console.log(event.target)
-    if(!questionsObject[order].question){
-        console.log('correct')
-     theEnd();
-     return
-    }
-    else if (text === questionsObject[order].correctAnswer){
-       console.log('correct')
-       displayQuestion(order);
-    } else {
-        console.log('incorrect')
-        score -= 10;
-      displayQuestion(order) }
+    let answerButtonA = document.createElement('button')
+   answerButtonA.innerText = questionsObject[order].answer.a; 
+   answerOne.appendChild(answerButtonA);
 
+   answerButtonA.addEventListener('click', function(event){
+    let clicked = event.target
+    let text = clicked.innerText
+  if(text === questionsObject[order].correctAnswer){
+    console.log('correct');
+    order += 1;
+    deleteOld()
+    displayQuestion(order)
+  } else {
+    order +=1;
+     score -=10; 
+    console.log('notgood')
+    deleteOld()
+    displayQuestion(order)
+    }
+ 
+})
+
+    //answer 2
+    let answerButtonB = document.createElement('button')
+    answerButtonB.innerText = questionsObject[order].answer.b;
+    answerTwo.appendChild(answerButtonB)
+//after click
+answerButtonB.addEventListener('click', function(event){
+  let clicked = event.target
+  let text = clicked.innerText
+if(text === questionsObject[order].correctAnswer){
+  console.log('correct');
+  order += 1;
+  deleteOld()
+  displayQuestion(order)
+} else {
+  order +=1;
+   score -=10; 
+  console.log('notgood')
+  deleteOld()
+  displayQuestion(order)
+  }
 
 })
-    //answer 2
-    
-    answerTwo.innerText = questionsObject[order].answer[1];
-    
+
     //answer 3
-    
-    answerThree.innerText = questionsObject[order].answer[2];
-   
+    let answerButtonC = document.createElement('button');
+    answerButtonC.innerText = questionsObject[order].answer.c;
+    answerThree.appendChild(answerButtonC)
+//after cick
+answerButtonC.addEventListener('click', function(event){
+  let clicked = event.target
+  let text = clicked.innerText
+if(text === questionsObject[order].correctAnswer){
+  console.log('correct');
+  order += 1;
+  deleteOld()
+  displayQuestion(order)
+} else {
+  order +=1;
+  score -=10;
+  console.log('notgood')
+  deleteOld()
+  displayQuestion(order)
+  }
+
+})
     // answer 4
+    let answerButtonD = document.createElement('button');
+    answerButtonD.innerText = questionsObject[order].answer.d;
+    answerFour.appendChild(answerButtonD)
+//after click
+answerButtonD.addEventListener('click', function(event){
+  let clicked = event.target
+  let text = clicked.innerText
+if(text === questionsObject[order].correctAnswer){
+  console.log('correct');
+  order += 1;
+  deleteOld()
+  displayQuestion(order)
+} else {
+  order +=1;
+  score -=10;
+  console.log('notgood')
+  deleteOld()
+  displayQuestion(order)
+  }
+
+})
+//after click logic
+   
+
+
+
+  }
+ }
+
+
+
+
+
+
     
-    answerFour.innerText = questionsObject[order].answer[3];}
+ function deleteOld() {
+  
+  allAnswersList.children[0].innerHTML = "";
+  allAnswersList.children[1].innerHTML = "";
+  allAnswersList.children[2].innerHTML = "";
+  allAnswersList.children[3].innerHTML = "";
+}
 
 
 
-
-
-
-
-
-
-    
-
-
-
-//for (i of clickable) {
-  //  (function(i) {
-    //  i.addEventListener('click', function() {
-        
-      //  if (quest + 1 === undefined){ //this should check that there is next question in object, otherwise star the end.
-        //    theEnd();
-            //under is to check if the answer is correct
-          // } else if(questionsObject[quest].answer[0]  === questionsObject[quest].correctAnswer){
-            //displayQuestion (quest +1)} else {
-              //  score -= 10;
-                //displayQuestion (quest +1)
-            //}
-     // });
-   // })(i);
-  //}
-    
-//};
 
 
 

@@ -3,62 +3,58 @@
 
 const questionsObject =[ {
     question: "blah blah popidy blah",
-    answer:  [
-            "correct", 
-            "incorrect", 
-            "incorrect", 
-            "incorrect",], 
+    answer: { 
+            a: "incorrect", 
+            b: "incorrect", 
+            c: "incorrect", 
+            d: "incorrect" },
     correctAnswer: 'correct',
 }, { 
     question: "blaprdlajz",
-    answer: ["correct", 
-            "incorrect", 
-            "incorrect",
-            "incorrect",],
+    answer: {
+        a: "incorrect", 
+        b:  "incorrect", 
+        c:  "incorrect",
+        d:  "incorrect"},
     correctAnswer: 'correct',
 }, { 
-    question: "blah blah popidy blah",
-    answer: ["correct",
-            "incorrect",
-            "incorrect",
-            "incorrect",],
-    correctAnswer: 'correct', 
-}, { 
-    question: "blah blah popidy blah",
-    answer: ["correct",
-            "incorrect",
-            "incorrect",
-            "incorrect",], 
-    correctAnswer: 'correct', 
-}, { 
-    question: "blah blah popidy blah",
-    answer: ["correct",
-            "incorrect",
-            "incorrect",
-            "incorrect",], 
-    correctAnswer: 'correct', 
-}, { 
-    question: "blah blah popidy blah",
-    answer: ["correct", 
-            "incorrect",
-            "incorrect",
-            "incorrect",], 
-    correctAnswer: 'correct', 
-}, { 
-    question: "blah blah popidy blah",
-    answer: ["correct",
-            "incorrect", 
-            "incorrect", 
-            "incorrect",], 
-    correctAnswer: 'correct', 
-}, { 
-    question: "blah blah popidy blah",
-    answer: ["correct",
-            "incorrect", 
-            "incorrect",
-             "incorrect",], 
-    correctAnswer: 'correct', 
-}
-]
-
-
+    question: "blaprdlajz",
+    answer: {
+        a: "correct", 
+        b:  "incorrect", 
+        c:  "incorrect",
+        d:  "incorrect"},
+    correctAnswer: 'correct',
+},{ 
+    question: "blaprdlajz",
+    answer: {
+        a: "correct", 
+        b:  "incorrect", 
+        c:  "incorrect",
+        d:  "incorrect"},
+    correctAnswer: 'correct',
+},{ 
+    question: "blaprdlajz",
+    answer: {
+        a: "correct", 
+        b:  "incorrect", 
+        c:  "incorrect",
+        d:  "incorrect"},
+    correctAnswer: 'correct',
+},{ 
+    question: "blaprdlajz",
+    answer: {
+        a: "correct", 
+        b:  "incorrect", 
+        c:  "incorrect",
+        d:  "incorrect"},
+    correctAnswer: 'correct',
+},{ 
+    question: "blaprdlajz",
+    answer: {
+        a: "correct", 
+        b:  "incorrect", 
+        c:  "incorrect",
+        d:  "incorrect"},
+    correctAnswer: 'correct',
+},]
