@@ -4,6 +4,10 @@ const start = document.getElementById('start');
 const startScreen = document.getElementById('start-screen')
 const questionDiv = document.getElementById('questions');
 const endScreen = document.getElementById('end-screen');
+const wrongSound = document.getElementById('wrong-sound');
+const goodSound = document.getElementById('correct-sound')
+
+
 
 let questionTitle = document.getElementById('question-title');
 let divChoices = document.getElementById('choices');
@@ -12,6 +16,8 @@ let stopTimer = false //will need this to stop the timer if function the end is 
 let score = 6 * 10;; //score tracker
 let order = 0; //questions order
 let mistake = false
+
+
 
 
 //creating questions layout
@@ -82,12 +88,14 @@ score;//will save seconds left into variable which is available globaly
     order += 1;
     deleteOld()
     displayQuestion(order)
+    goodSound.play()
   } else {
     order +=1;
      score -=10; 
     console.log('notgood')
     deleteOld()
     displayQuestion(order)
+    wrongSound.play()
     }
  
 })
@@ -105,12 +113,14 @@ if(text === questionsObject[order].correctAnswer){
   order += 1;
   deleteOld()
   displayQuestion(order)
+  goodSound.play()
 } else {
   order +=1;
    score -=10; 
   console.log('notgood')
   deleteOld()
   displayQuestion(order)
+  wrongSound.play()
   }
 
 })
@@ -128,12 +138,14 @@ if(text === questionsObject[order].correctAnswer){
   order += 1;
   deleteOld()
   displayQuestion(order)
+  goodSound.play()
 } else {
   order +=1;
   score -=10;
   console.log('notgood')
   deleteOld()
   displayQuestion(order)
+  wrongSound.play()
   }
 
 })
@@ -150,12 +162,14 @@ if(text === questionsObject[order].correctAnswer){
   order += 1;
   deleteOld()
   displayQuestion(order)
+  goodSound.play()
 } else {
   order +=1;
   score -=10;
   console.log('notgood')
   deleteOld()
   displayQuestion(order)
+  wrongSound.play()
   }
 
 })
@@ -204,7 +218,7 @@ function theEnd(){
     startScreen.setAttribute('class','hide');
     questionDiv.setAttribute('class', 'hide');
     endScreen.setAttribute('class','visible');
-    finalScore.innerText = score;
+    finalScore.innerText = score - 1 ;
 
 }
 
