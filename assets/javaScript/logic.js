@@ -45,7 +45,7 @@ let timerInterval = setInterval(function(){
             score--;
             timerDisplay.textContent = score;
         if(score < 0) {
-        alert('You have run out of time! Try again')
+        alert('You have run out of time! Try again :)')
        //if times reaches 0 alert that game is lost
        window.location.reload();//this line will refresh page if game is lost
         clearInterval(timerInterval);
