@@ -17,7 +17,12 @@ let fifth = document.createElement('li');
 
 
 
-highScores.append(first, second, third, fourth, fifth);
+highScores.appendChild(first);
+highScores.appendChild(second);
+highScores.appendChild(third);
+highScores.appendChild(fourth);
+highScores.appendChild(fifth);
+
 
 leadersArray.sort((a, b) => b.points - a.points)
 
